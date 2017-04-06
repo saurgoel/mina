@@ -10,6 +10,7 @@ module Mina
       Configuration.instance
     end
 
+    # To invoke a specific task
     def invoke(task, *args)
       Rake::Task[task].invoke(*args)
       Rake::Task[task].reenable
@@ -23,6 +24,7 @@ module Mina
       @commands = Commands.new
     end
 
+    # To run commands on custom environment. :local or :remote
     def run(backend)
       # @commands = Commands.new
       invoke :environment if backend == :remote
@@ -45,6 +47,7 @@ module Mina
       @commands = real_commands
     end
 
+    # Deploy Block. All commands here run in the remote.
     def deploy(&block)
       run :remote do
         command deploy_script(&block), quiet: true
